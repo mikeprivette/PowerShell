@@ -1,6 +1,6 @@
 # PowerShell Commands
 
-Useful PowerShell one-liners (maybe some are two-liners) and and commands.
+Useful PowerShell one-liner (and some two-liners) commands.
 
 ## Table of Contents
 
