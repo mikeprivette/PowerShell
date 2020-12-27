@@ -186,6 +186,11 @@ Get All Computer Objects from a TXT File of OUs
 ``` powershell
 Get-Content C:\<path>\computer_ous.txt | % {Get-ADComputer -Server "domain.com" -SearchBase $_ -Filter '*' -Properties * | Select name,ipv4address,operatingsystem,CanonicalName,distinguishedname,enabled} | Export-Csv C:\<path>\computers_in_ous.csv -Append -NoClobber
 ```
+List the IP address of the current machine
+
+``` powershell
+$env:HostIP = ( Get-NetIPConfiguration | Where-Object { $_.IPv4DefaultGateway -ne $null -and $_.NetAdapter.Status -ne "Disconnected"}).IPv4Address.IPAddress
+```
 
 ## File Level Commands
 
@@ -193,4 +198,16 @@ Recursively Remove Files Older than a Certain Day in a Directory
 
 ``` powershell
 Get-ChildItem -Path "C:\<path>\<dir>\" -Recurse | Where-Object CreationTime -gt (Get-Date).AddDays(-180) | Remove-Item -Recurse
+```
+
+Generate a SHA256 hash of a file
+
+``` powershell
+Get-FileHash "C:\<path>\<dir>\" -Algorithm SHA256 | Select-Object -Property Hash
+```
+
+Create a new directory in the same directory as your script
+
+``` powershell
+New-Item -Path ($PSScriptRoot + "directoryname") -ItemType directory | Out-Null
 ```
